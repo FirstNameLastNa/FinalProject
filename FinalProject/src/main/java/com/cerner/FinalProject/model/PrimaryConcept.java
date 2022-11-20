@@ -1,38 +1,54 @@
 package com.cerner.FinalProject.model;
 
-
-
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name="PrimaryConcept")
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class PrimaryConcept {
-	@Id
-	private String id;  
-	private String contextId  ;
+	
+	private long id;  
+	@Column(name="contextId", nullable = false)
+	private String contextId;
+	@Column(name="conceptAlias", nullable = false)
 	private String conceptAlias;
+	@Column(name="modelId", nullable = false)
 	private boolean modelId ;
-	public String getId() {
+	
+	private Model model;
+	
+	@ManyToOne
+	public Model getModel() {
+		return model;
+	}
+
+	public void setModel(Model model) {
+		this.model = model;
+	}
+
+	@Id
+    @Column(name = "PRIMARY_CONCEPT_ID")
+    @GeneratedValue
+	public long getId() {
 		return id;
 	}
-	public void setId(String id) {
+	
+	public void setId(long id) {
 		this.id = id;
 	}
+	
 	public String getContextId() {
 		return contextId;
 	}
+	
 	public void setContextId(String contextId) {
 		this.contextId = contextId;
 	}
+	
 	public String getConceptAlias() {
 		return conceptAlias;
 	}
@@ -45,11 +61,21 @@ public class PrimaryConcept {
 	public void setModelId(boolean modelId) {
 		this.modelId = modelId;
 	}
+	public PrimaryConcept(long id, String contextId, String conceptAlias, boolean modelId) {
+		super();
+		this.id = id;
+		this.contextId = contextId;
+		this.conceptAlias = conceptAlias;
+		this.modelId = modelId;
+	}
+	public PrimaryConcept() {
+		super();
+	}
 	
-	
-	
-	
-	
-	
+	@Override
+	public String toString() {
+		return "PrimaryConcept [id=" + id + ", contextId=" + contextId + ", conceptAlias=" + conceptAlias + ", modelId="
+				+ modelId + "]";
+	}
 	
 }

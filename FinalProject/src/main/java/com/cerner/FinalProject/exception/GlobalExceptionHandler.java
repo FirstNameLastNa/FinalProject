@@ -1,33 +1,52 @@
 package com.cerner.FinalProject.exception;
 
-import java.util.Date;
-
+import java.time.LocalDateTime;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.context.request.WebRequest;
 
-import com.cerner.FinalProject.model.Statement;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
 	
-@ExceptionHandler(StatementNotFoundException.class)
-public ResponseEntity<Statement> statementNotFoundException(StatementNotFoundException ex, WebRequest request){
-	ErrorDetails errorDetails  = new ErrorDetails(new Date(), ex.getMessage(), request.getDescription(false));
-	
-	return new ResponseEntity<Statement>(HttpStatus.NOT_FOUND);
-}
+	@ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<ErrorDetails> resourceNotFound(ResourceNotFoundException ex) {
+		ErrorDetails response = new ErrorDetails();
+        response.setErrorCode("NOT_FOUND");
+        response.setErrorMessage(ex.getMessage());
+        response.setTimestamp(LocalDateTime.now());
 
-@ExceptionHandler(Exception.class)
+        return new ResponseEntity<ErrorDetails>(response, HttpStatus.NOT_FOUND);
+    }
 
-public ResponseEntity<Statement> globalExceptionHandler(Exception ex, WebRequest request){
-	
-	ErrorDetails errorDetails  = new ErrorDetails(new Date(), ex.getMessage(), request.getDescription(false));
-	
-	return new ResponseEntity<Statement>(HttpStatus.INTERNAL_SERVER_ERROR);
-}
+    @ExceptionHandler(ResourceAlreadyExists.class)
+    public ResponseEntity<ErrorDetails> resourceAlreadyExists(ResourceAlreadyExists ex) {
+    	ErrorDetails response=new ErrorDetails();
+        response.setErrorCode("CONFLICT");
+        response.setErrorMessage(ex.getMessage());
+        response.setTimestamp(LocalDateTime.now());
 
+        return new ResponseEntity<ErrorDetails>(response, HttpStatus.CONFLICT);
+    }
 
+    @ExceptionHandler(CustomException.class)
+    public ResponseEntity<ErrorDetails> customException(CustomException ex) {
+    	ErrorDetails response=new ErrorDetails();
+        response.setErrorCode("BAD_REQUEST");
+        response.setErrorMessage(ex.getMessage());
+        response.setTimestamp(LocalDateTime.now());
+
+        return new ResponseEntity<ErrorDetails>(response, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(UnauthorizedException.class)
+    public ResponseEntity<ErrorDetails> unauthorizedException(UnauthorizedException ex) {
+    	ErrorDetails response=new ErrorDetails();
+        response.setErrorCode("UNAUTHORIZED");
+        response.setErrorMessage(ex.getMessage());
+        response.setTimestamp(LocalDateTime.now());
+
+        return new ResponseEntity<ErrorDetails>(response, HttpStatus.UNAUTHORIZED);
+    }
 }

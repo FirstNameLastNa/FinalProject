@@ -6,15 +6,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.cerner.FinalProject.model.Statement;
+import com.cerner.FinalProject.model.StatementSettingsRelationship;
 
 @Repository
-public interface StatementRepository extends JpaRepository<Statement, Long>{
+public interface StatementSettingRepository extends JpaRepository<StatementSettingsRelationship, Long>{
 
-	Page<Statement> findByIdContaining(Long id, PageRequest of);
-	
+	long findStatementIdBySettingId(Long settingId);
 
-	
 
 	
-
 }

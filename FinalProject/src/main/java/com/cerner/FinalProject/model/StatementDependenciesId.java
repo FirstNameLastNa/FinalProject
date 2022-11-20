@@ -5,21 +5,30 @@ import java.util.Objects;
 
 import javax.persistence.Embeddable;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
 
 @Embeddable
-@AllArgsConstructor
-@NoArgsConstructor
-@Data
 @EqualsAndHashCode
 public class StatementDependenciesId implements Serializable{
+	
 	private String statementId;
 	private String version;
 	private String author;
 	
+	public StatementDependenciesId() {
+		super();
+	}
+	@Override
+	public String toString() {
+		return "StatementDependenciesId [statementId=" + statementId + ", version=" + version + ", author=" + author
+				+ "]";
+	}
+	public StatementDependenciesId(String statementId, String version, String author) {
+		super();
+		this.statementId = statementId;
+		this.version = version;
+		this.author = author;
+	}
 	
 	public String getStatementId() {
 		return statementId;
@@ -55,9 +64,4 @@ public class StatementDependenciesId implements Serializable{
 		return Objects.equals(author, other.author) && Objects.equals(statementId, other.statementId)
 				&& Objects.equals(version, other.version);
 	}
-	
-	
-	
-	
-
 }

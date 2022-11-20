@@ -2,19 +2,10 @@ package com.cerner.FinalProject.model;
 
 import java.io.Serializable;
 import java.util.Objects;
-
 import javax.persistence.Embeddable;
-import javax.persistence.Id;
-
-import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
 
 @Embeddable
-@AllArgsConstructor
-@NoArgsConstructor
-@Data
 @EqualsAndHashCode
 public class StatementFunctionsRelationshipId implements Serializable{
 	private String statementId;
@@ -54,9 +45,19 @@ public class StatementFunctionsRelationshipId implements Serializable{
 		return Objects.equals(author, other.author) && Objects.equals(statementId, other.statementId)
 				&& Objects.equals(version, other.version);
 	}
-	
-	
-	
-	
+	public StatementFunctionsRelationshipId(String statementId, String version, String author) {
+		super();
+		this.statementId = statementId;
+		this.version = version;
+		this.author = author;
+	}
+	public StatementFunctionsRelationshipId() {
+		super();
+	}
+	@Override
+	public String toString() {
+		return "StatementFunctionsRelationshipId [statementId=" + statementId + ", version=" + version + ", author="
+				+ author + "]";
+	}
 	
 }

@@ -8,12 +8,12 @@ import javax.persistence.Embeddable;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 @Embeddable
-@AllArgsConstructor
-@NoArgsConstructor
-@Data
 @EqualsAndHashCode
 public class ModelComposite implements Serializable{
 	private String statementId;
@@ -53,9 +53,18 @@ public class ModelComposite implements Serializable{
 		return Objects.equals(author, other.author) && Objects.equals(statementId, other.statementId)
 				&& Objects.equals(version, other.version);
 	}
+	public ModelComposite(String statementId, String version, String author) {
+		super();
+		this.statementId = statementId;
+		this.version = version;
+		this.author = author;
+	}
+	public ModelComposite() {
+		super();
+	}
+	@Override
+	public String toString() {
+		return "ModelComposite [statementId=" + statementId + ", version=" + version + ", author=" + author + "]";
+	}
 	
-	
-	
-	
-
 }

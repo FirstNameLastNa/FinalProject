@@ -9,14 +9,21 @@ import com.cerner.FinalProject.model.Statement;
 
 public interface StatementService {
 
-	Page<Statement> getStatement(Pageable pageable);
+	List<Statement> getStatement();
 
 	Statement createStatement(Statement statement);
 
-	Statement getStatementById(String id);
+	Statement getStatementById(Long id);
 
-	void deleteStatementById(String id);
+	void deleteStatementById(Long id);
 
-	//Statement updateStatement(Statement statement);
+	Statement updateStatement(Statement statement);
+
+	Statement findStatementWithPagination(Long id, String statementDisplay, Integer offset, Integer limit,
+			String location);
+
+	long getStatementIdBySettinginId(Long settingId);
+
+	long getStatementByFunctionId(Long functionId);
 
 }

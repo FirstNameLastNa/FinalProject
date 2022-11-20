@@ -1,32 +1,47 @@
 package com.cerner.FinalProject.model;
 
-import java.util.Objects;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="AdditionalChecks")
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class AdditionalChecks {
-
-	@Id
-	private String id;  
+	
+	private long  id; 
+	@Column(name="type", nullable = false)
 	private String type;
-	private String contextId;             
+	@Column(name="contextId", nullable = false)
+	private String contextId; 
+	@Column(name="conceptAlias", nullable = false)
 	private String conceptAlias;
-	private boolean modelId;
-	public String getId() {
+	@Column(name="modelId", nullable = false)
+	private boolean modalId;
+	private Model model;
+	
+	@ManyToOne
+	public Model getModel() {
+		return model;
+	}
+
+	public void setModel(Model model) {
+		this.model = model;
+	}
+	
+	@Id
+    @Column(name = "ADDITIONAL_CHECKS_ID")
+    @GeneratedValue
+	public long getId() {
 		return id;
 	}
-	public void setId(String id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 	public String getType() {
@@ -47,42 +62,22 @@ public class AdditionalChecks {
 	public void setConceptAlias(String conceptAlias) {
 		this.conceptAlias = conceptAlias;
 	}
-	public boolean isModelId() {
-		return modelId;
+	public boolean isModalId() {
+		return modalId;
 	}
-	public void setModelId(boolean modelId) {
-		this.modelId = modelId;
+	public void setModalId(boolean modelId) {
+		this.modalId = modelId;
 	}
-	public AdditionalChecks(String id, String type, String contextId, String conceptAlias, boolean modelId) {
+	public AdditionalChecks(long id, String type, String contextId, String conceptAlias, boolean modalId) {
 		super();
 		this.id = id;
 		this.type = type;
 		this.contextId = contextId;
 		this.conceptAlias = conceptAlias;
-		this.modelId = modelId;
+		this.modalId = modalId;
 	}
 	public AdditionalChecks() {
 		super();
 	}
-	@Override
-	public int hashCode() {
-		return Objects.hash(conceptAlias, contextId, id, modelId, type);
-	}
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		AdditionalChecks other = (AdditionalChecks) obj;
-		return Objects.equals(conceptAlias, other.conceptAlias) && Objects.equals(contextId, other.contextId)
-				&& Objects.equals(id, other.id) && modelId == other.modelId && Objects.equals(type, other.type);
-	}
-	
-	
-	
-	
-	} 
+} 
 	

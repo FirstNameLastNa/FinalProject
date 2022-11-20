@@ -1,46 +1,42 @@
 package com.cerner.FinalProject.model;
 
-
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="Model")
 public class Model {
-	@Id
-	private String id;
+	
+	private long id;
+	@Column(name="model", nullable = false, columnDefinition = "Text")
 	private String modal;
-	
-	//private String statementUid;
-	
 	@Embedded
 	private ModelComposite modelComposite;
-	
-//	@OneToOne(mappedBy = "Model", fetch=FetchType.LAZY, cascade = CascadeType.ALL)
-//	List<PrimaryConcept> primaryConcepts;
-//	
-//	@OneToOne(mappedBy = "Model", fetch=FetchType.LAZY, cascade = CascadeType.ALL)
-//	List<ModifierConcept> modifierConcepts;
-//	
-//	
-//	@OneToOne(mappedBy = "Model", fetch=FetchType.LAZY, cascade = CascadeType.ALL)
-//	List<AdditionalChecks> additionalChecks;
-	
-	
+	@Column(name="negateModifier", nullable = false)
 	private boolean negateModifier;
-
-	public String getId() {
+	private Statement statement;
+	
+	List<PrimaryConcept> primaryConcepts;
+	List<ModifierConcept> modifierConcepts;
+	List<AdditionalChecks> additionalChecks;
+	@Id
+    @Column(name = "modalId")
+    @GeneratedValue
+	public long getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
@@ -67,12 +63,47 @@ public class Model {
 	public void setNegateModifier(boolean negateModifier) {
 		this.negateModifier = negateModifier;
 	}
-		
+	
+	@ManyToOne
+	public Statement getStatement() {
+		return statement;
+	}
 
+	public void setStatement(Statement statement) {
+		this.statement = statement;
+	}
+	
+	@Override
+	public String toString() {
+		return "Model [id=" + id + ", modal=" + modal + ", modelComposite=" + modelComposite + ", negateModifier="
+				+ negateModifier + "]";
+	}
 
-	
-	
-	
-	
-	
+	@OneToMany(targetEntity = PrimaryConcept.class,    mappedBy = "model",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	public List<PrimaryConcept> getPrimaryConcepts() {
+		return primaryConcepts;
+	}
+
+	public void setPrimaryConcepts(List<PrimaryConcept> primaryConcepts) {
+		this.primaryConcepts = primaryConcepts;
+	}
+
+	@OneToMany(targetEntity = ModifierConcept.class, mappedBy = "model", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	public List<ModifierConcept> getModifierConcepts() {
+		return modifierConcepts;
+	}
+
+	public void setModifierConcepts(List<ModifierConcept> modifierConcepts) {
+		this.modifierConcepts = modifierConcepts;
+	}
+
+	@OneToMany(targetEntity = AdditionalChecks.class, mappedBy = "model", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	public List<AdditionalChecks> getAdditionalChecks() {
+		return additionalChecks;
+	}
+
+	public void setAdditionalChecks(List<AdditionalChecks> additionalChecks) {
+		this.additionalChecks = additionalChecks;
+	}
+
 }

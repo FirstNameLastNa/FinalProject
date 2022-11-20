@@ -1,30 +1,45 @@
-
 package com.cerner.FinalProject.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="ModifierConcept")
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class ModifierConcept {
-
-	@Id
-	private String id;                    
-	private String contextId;             
+	
+	private long id;
+	@Column(name="contextId", nullable = false)
+	private String contextId;
+	@Column(name="conceptAlias", nullable = false)
 	private String conceptAlias;
+	@Column(name="modelId", nullable = false)
 	private boolean modelId;
-	public String getId() {
+	
+	private Model model;
+	
+	@ManyToOne
+	public Model getModel() {
+		return model;
+	}
+
+	public void setModel(Model model) {
+		this.model = model;
+	}
+	
+	@Id
+    @Column(name = "MODIFIER_CONCEPT_ID")
+    @GeneratedValue
+	public long getId() {
 		return id;
 	}
-	public void setId(String id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 	public String getContextId() {
@@ -45,10 +60,20 @@ public class ModifierConcept {
 	public void setModelId(boolean modelId) {
 		this.modelId = modelId;
 	}
+	public ModifierConcept(long id, String contextId, String conceptAlias, boolean modelId) {
+		super();
+		this.id = id;
+		this.contextId = contextId;
+		this.conceptAlias = conceptAlias;
+		this.modelId = modelId;
+	}
+	public ModifierConcept() {
+		super();
+	}
 	
-	
-	
-	
-	
-	
+	@Override
+	public String toString() {
+		return "ModifierConcept [id=" + id + ", contextId=" + contextId + ", conceptAlias=" + conceptAlias
+				+ ", modelId=" + modelId + "]";
+	}
 }
