@@ -4,14 +4,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 import javax.persistence.Embeddable;
-
-import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
 
 @Embeddable
 @EqualsAndHashCode
@@ -66,5 +59,4 @@ public class ModelComposite implements Serializable{
 	public String toString() {
 		return "ModelComposite [statementId=" + statementId + ", version=" + version + ", author=" + author + "]";
 	}
-	
 }

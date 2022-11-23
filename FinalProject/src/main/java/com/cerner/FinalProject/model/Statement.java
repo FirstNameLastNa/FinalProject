@@ -11,11 +11,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import org.hibernate.annotations.Type;
 
 @Entity
 @Table(name="statement")
-
 public class Statement {
 	
 	private long id;
@@ -28,19 +26,12 @@ public class Statement {
 	private String statementText;
 	@Column(name="statementDependencyAlias", nullable = false, columnDefinition = "Text")
 	private String statementDependencyAlias;
-		
-	@Type(type = "json")
-    @Column(columnDefinition = "json")
-	private RecordOperation recordOperation;	
-	
-	@Type(type = "json")
-    @Column(columnDefinition = "json")
-	private DateOperation dateOperations;
-	
-	@Type(type = "json")
-    @Column(columnDefinition = "json")
-	private RequiredOperation requiredOperations;
-	
+	@Column(name="recordOperations", nullable = false, columnDefinition = "Text")
+	private String recordOperations;
+	@Column(name="dateOperations", nullable = false, columnDefinition = "Text")
+	private String dateOperations;
+	@Column(name="requiredOperations", nullable = false, columnDefinition = "Text")
+	private String requiredOperations;
 	@Column(name="selector", nullable = false, columnDefinition = "Text")
 	private String selector;
 	@Column(name="cardinality", nullable = false)
@@ -49,7 +40,8 @@ public class Statement {
 	private String withDistinct;
 	@Column(name="negateStatement", nullable = false)
 	private boolean negateStatement;
-	private String[] tags;
+	@Column(name="tags", nullable = false, columnDefinition = "Text")
+	private String tags;
 	@Column(name="frequencyType")
 	private String frequencyType;
 	@Column(name="frequencyValue")
@@ -70,15 +62,13 @@ public class Statement {
 	private Date updatedAt;
 	@Column(name = "updated_by")
 	private Date updatedBy;
-	
-	List<Model> models;
-	
 	private String firstLink;
 	private String nextLink;
 	private String prevLink;
 	private String lastLink;
 	private int totalResults;
 	
+	List<Model> models;
 	
 	 public int getTotalResults() {
 		return totalResults;
@@ -171,30 +161,6 @@ public class Statement {
 		this.statementDependencyAlias = statementDependencyAlias;
 	}
 
-	public RecordOperation getRecordOperation() {
-		return recordOperation;
-	}
-
-	public void setRecordOperation(RecordOperation recordOperation) {
-		this.recordOperation = recordOperation;
-	}
-
-	public DateOperation getDateOperations() {
-		return dateOperations;
-	}
-
-	public void setDateOperations(DateOperation dateOperations) {
-		this.dateOperations = dateOperations;
-	}
-
-	public RequiredOperation getRequiredOperations() {
-		return requiredOperations;
-	}
-
-	public void setRequiredOperations(RequiredOperation requiredOperations) {
-		this.requiredOperations = requiredOperations;
-	}
-
 	public String getSelector() {
 		return selector;
 	}
@@ -225,14 +191,6 @@ public class Statement {
 
 	public void setNegateStatement(boolean negateStatement) {
 		this.negateStatement = negateStatement;
-	}
-
-	public String[] getTags() {
-		return tags;
-	}
-
-	public void setTags(String[] tags) {
-		this.tags = tags;
 	}
 
 	public String getFrequencyType() {
@@ -287,6 +245,10 @@ public class Statement {
 		return createdBy;
 	}
 
+	public Statement() {
+		super();
+	}
+
 	public void setCreatedBy(Date createdBy) {
 		this.createdBy = createdBy;
 	}
@@ -324,12 +286,59 @@ public class Statement {
 		this.models = models;
 	}
 
+	public String getRecordOperations() {
+		return recordOperations;
+	}
+
+	public void setRecordOperations(String recordOperations) {
+		this.recordOperations = recordOperations;
+	}
+
+	public String getDateOperations() {
+		return dateOperations;
+	}
+
+	public void setDateOperations(String dateOperations) {
+		this.dateOperations = dateOperations;
+	}
+
+	public String getRequiredOperations() {
+		return requiredOperations;
+	}
+
+	public void setRequiredOperations(String requiredOperations) {
+		this.requiredOperations = requiredOperations;
+	}
+
+	public String getTags() {
+		return tags;
+	}
+
+	public void setTags(String tags) {
+		this.tags = tags;
+	}
+
+	@Override
+	public String toString() {
+		return "Statement [id=" + id + ", recordName=" + recordName + ", scope=" + scope + ", statementDisplay="
+				+ statementDisplay + ", statementText=" + statementText + ", statementDependencyAlias="
+				+ statementDependencyAlias + ", recordOperations=" + recordOperations + ", dateOperations="
+				+ dateOperations + ", requiredOperations=" + requiredOperations + ", selector=" + selector
+				+ ", cardinality=" + cardinality + ", withDistinct=" + withDistinct + ", negateStatement="
+				+ negateStatement + ", tags=" + tags + ", frequencyType=" + frequencyType + ", frequencyValue="
+				+ frequencyValue + ", status=" + status + ", version=" + version + ", baseVersion=" + baseVersion
+				+ ", author=" + author + ", createdBy=" + createdBy + ", createdAt=" + createdAt + ", updatedAt="
+				+ updatedAt + ", updatedBy=" + updatedBy + ", models=" + models + ", firstLink=" + firstLink
+				+ ", nextLink=" + nextLink + ", prevLink=" + prevLink + ", lastLink=" + lastLink + ", totalResults="
+				+ totalResults + "]";
+	}
+
 	public Statement(long id, String recordName, Scope scope, String statementDisplay, String statementText,
-			String statementDependencyAlias, RecordOperation recordOperation, DateOperation dateOperations,
-			RequiredOperation requiredOperations, String selector, long cardinality, String withDistinct,
-			boolean negateStatement, String[] tags, String frequencyType, long frequencyValue, String status,
-			String version, String baseVersion, String author, Date createdBy, Date createdAt, Date updatedAt,
-			Date updatedBy, List<Model> models) {
+			String statementDependencyAlias, String recordOperations, String dateOperations, String requiredOperations,
+			String selector, long cardinality, String withDistinct, boolean negateStatement, String tags,
+			String frequencyType, long frequencyValue, String status, String version, String baseVersion, String author,
+			Date createdBy, Date createdAt, Date updatedAt, Date updatedBy, List<Model> models, String firstLink,
+			String nextLink, String prevLink, String lastLink, int totalResults) {
 		super();
 		this.id = id;
 		this.recordName = recordName;
@@ -337,7 +346,7 @@ public class Statement {
 		this.statementDisplay = statementDisplay;
 		this.statementText = statementText;
 		this.statementDependencyAlias = statementDependencyAlias;
-		this.recordOperation = recordOperation;
+		this.recordOperations = recordOperations;
 		this.dateOperations = dateOperations;
 		this.requiredOperations = requiredOperations;
 		this.selector = selector;
@@ -356,10 +365,10 @@ public class Statement {
 		this.updatedAt = updatedAt;
 		this.updatedBy = updatedBy;
 		this.models = models;
+		this.firstLink = firstLink;
+		this.nextLink = nextLink;
+		this.prevLink = prevLink;
+		this.lastLink = lastLink;
+		this.totalResults = totalResults;
 	}
-
-	public Statement() {
-		super();
-	}
-	
 }

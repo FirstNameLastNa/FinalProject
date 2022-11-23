@@ -6,11 +6,9 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import com.cerner.FinalProject.exception.CustomException;
 import com.cerner.FinalProject.exception.ResourceNotFoundException;
 import com.cerner.FinalProject.model.Statement;
 import com.cerner.FinalProject.repository.StatementFunctionRepository;
@@ -29,7 +27,6 @@ public class StatementServiceImpl implements StatementService{
 	
 	@Autowired
 	private StatementFunctionRepository functionRepository;
-	
 	
 	@Override
 	public List<Statement> getStatement() {
@@ -54,7 +51,6 @@ public class StatementServiceImpl implements StatementService{
 		return settingRepository.findStatementIdBySettingId(settingId);
 	}
 
-
 	@Override
 	public long getStatementByFunctionId(Long functionId) {
 		
@@ -64,46 +60,45 @@ public class StatementServiceImpl implements StatementService{
 	@Override
 	public Statement createStatement(Statement statement) {
 		
-		
 		Statement savedStatement = repository.save(statement);
 		return savedStatement;
 	}
-	
 
 	@Override
 	public void deleteStatementById(Long id) {
 		repository.deleteById(id);
-		
 	}
 
 	@Override
 	public Statement updateStatement(@RequestBody Statement statement) {
-		Statement updateStatement = repository.findById(statement.getId())
-                .orElseThrow(() -> new ResourceNotFoundException("Statement not exist with id: " + statement.getId()));
-		if(updateStatement!=null) {
-		updateStatement.setAuthor(statement.getAuthor());
-		updateStatement.setId(statement.getId());
-		updateStatement.setBaseVersion(statement.getBaseVersion());
-		updateStatement.setCardinality(statement.getCardinality());
-		updateStatement.setCreatedAt(statement.getCreatedAt());
-		updateStatement.setCreatedBy(statement.getCreatedBy());
-		updateStatement.setFrequencyType(statement.getFrequencyType());
-		updateStatement.setFrequencyValue(statement.getFrequencyValue());
-		updateStatement.setRecordName(statement.getRecordName());
-		updateStatement.setSelector(statement.getSelector());
-		updateStatement.setStatementDependencyAlias(statement.getStatementDependencyAlias());
-		updateStatement.setStatementDisplay(statement.getStatementDisplay());
-		updateStatement.setStatementText(statement.getStatementText());
-		updateStatement.setStatus(statement.getStatus());
-		updateStatement.setTags(statement.getTags());
-		updateStatement.setUpdatedAt(statement.getUpdatedAt());
-		updateStatement.setUpdatedBy(statement.getUpdatedBy());
-		updateStatement.setVersion(statement.getVersion());
-		updateStatement.setWithDistinct(statement.getWithDistinct());
-		updateStatement.setNegateStatement(statement.getNegateStatement());
+		Statement statementDBObject = repository.findById(statement.getId())
+				.orElseThrow(() -> new ResourceNotFoundException("Statement not exist with id: " + statement.getId()));
 	
-        return repository.save(updateStatement);
+		if(statementDBObject!=null) {
+			statementDBObject.setAuthor(statement.getAuthor());
+			statementDBObject.setId(statement.getId());
+			statementDBObject.setBaseVersion(statement.getBaseVersion());
+			statementDBObject.setCardinality(statement.getCardinality());
+			statementDBObject.setCreatedAt(statement.getCreatedAt());
+			statementDBObject.setCreatedBy(statement.getCreatedBy());
+			statementDBObject.setFrequencyType(statement.getFrequencyType());
+			statementDBObject.setFrequencyValue(statement.getFrequencyValue());
+			statementDBObject.setRecordName(statement.getRecordName());
+			statementDBObject.setSelector(statement.getSelector());
+			statementDBObject.setStatementDependencyAlias(statement.getStatementDependencyAlias());
+			statementDBObject.setStatementDisplay(statement.getStatementDisplay());
+			statementDBObject.setStatementText(statement.getStatementText());
+			statementDBObject.setStatus(statement.getStatus());
+			statementDBObject.setTags(statement.getTags());
+			statementDBObject.setUpdatedAt(statement.getUpdatedAt());
+			statementDBObject.setUpdatedBy(statement.getUpdatedBy());
+			statementDBObject.setVersion(statement.getVersion());
+			statementDBObject.setWithDistinct(statement.getWithDistinct());
+			statementDBObject.setNegateStatement(statement.getNegateStatement());
+	
+        return repository.save(statementDBObject);
 		}
+	
 		else {
 			repository.save(statement);
 			return statement;
@@ -122,7 +117,7 @@ public class StatementServiceImpl implements StatementService{
 			List<Statement> statements2 = statements.toList();
 			
 			if(statements2!=null) {
-				statement = new Statement();
+				statement = statements2.get(0);
 				statement.setTotalResults(statements.getNumberOfElements());				
 			}
 			
@@ -141,7 +136,6 @@ public class StatementServiceImpl implements StatementService{
 			}
 			
 			if(offset==0 ) {
-				
 			}else {
 				
 				statement.setLastLink(location+(id!=null?"id="+id+"&":"")+"statementDisplay="+statementDisplay+"offset="+(offset+1)+"&limit="+limit);				
@@ -154,7 +148,7 @@ public class StatementServiceImpl implements StatementService{
 				
 				if(statements2!=null) {
 					
-					statement = new Statement();
+					statement = statements2.get(0);
 				}
 				System.out.println(statements.getTotalPages());
 				
@@ -171,7 +165,6 @@ public class StatementServiceImpl implements StatementService{
 					statement.setPrevLink(location+(id!=null?"id="+id+"&":"")+"statementDisplay="+statementDisplay+"offset="+(offset+1)+"&limit="+limit);
 				}
 				if(offset==0 ) {
-					
 				}
 				else {
 					statement.setLastLink(location+(id!=null?"id="+id+"&":"")+"statementDisplay="+statementDisplay+"offset="+(offset+1)+"&limit="+limit);
@@ -181,6 +174,5 @@ public class StatementServiceImpl implements StatementService{
 				
 		return statement;
 	}
-
 }
 

@@ -1,7 +1,6 @@
 package com.cerner.FinalProject.model;
 
 import java.util.Objects;
-
 import javax.persistence.Embeddable;
 
 @Embeddable

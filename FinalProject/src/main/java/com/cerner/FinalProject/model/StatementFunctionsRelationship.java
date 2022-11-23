@@ -9,19 +9,12 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
-
 @Entity
 @Table(name="StatementFunctionsRelationship")
 public class StatementFunctionsRelationship {
 	
 	@Id
-	private String id;
+	private long id;
 	@Embedded
 	private StatementFunctionsRelationshipId statementFunctionsRelationshipId;
 	@Column(name = "functionId", nullable = false)
@@ -35,10 +28,10 @@ public class StatementFunctionsRelationship {
 	@Column(name = "updated_by")
 	private String updatedBy;
 	
-	public String getId() {
+	public long getId() {
 		return id;
 	}
-	public void setId(String id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 	public StatementFunctionsRelationshipId getStatementFunctionsRelationshipId() {
@@ -77,7 +70,7 @@ public class StatementFunctionsRelationship {
 	public void setUpdatedBy(String updatedBy) {
 		this.updatedBy = updatedBy;
 	}
-	public StatementFunctionsRelationship(String id, StatementFunctionsRelationshipId statementFunctionsRelationshipId,
+	public StatementFunctionsRelationship(long id, StatementFunctionsRelationshipId statementFunctionsRelationshipId,
 			String functionId, Date createdAt, Date createdBy, Date updatedAt, String updatedBy) {
 		super();
 		this.id = id;

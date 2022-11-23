@@ -2,7 +2,7 @@ package com.cerner.FinalProject;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
+	
 @SpringBootApplication
 public class FinalProjectApplication {
 
@@ -10,5 +10,4 @@ public class FinalProjectApplication {
 		SpringApplication.run(FinalProjectApplication.class, args);
 		System.out.println("Welcome to Cerner project");
 	}
-
 }

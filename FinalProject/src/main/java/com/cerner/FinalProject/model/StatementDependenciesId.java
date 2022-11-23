@@ -2,9 +2,7 @@ package com.cerner.FinalProject.model;
 
 import java.io.Serializable;
 import java.util.Objects;
-
 import javax.persistence.Embeddable;
-
 import lombok.EqualsAndHashCode;
 
 @Embeddable

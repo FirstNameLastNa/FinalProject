@@ -9,7 +9,4 @@ import com.cerner.FinalProject.model.StatementFunctionsRelationship;
 public interface StatementFunctionRepository extends JpaRepository<StatementFunctionsRelationship, Long>{
 
 	long findStatementIdByFunctionId(Long functionId);
-
-
-	
 }

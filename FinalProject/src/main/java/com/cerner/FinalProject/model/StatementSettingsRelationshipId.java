@@ -8,6 +8,7 @@ import lombok.EqualsAndHashCode;
 @Embeddable
 @EqualsAndHashCode
 public class StatementSettingsRelationshipId implements Serializable{
+	
 	private String statementId;
 	private String version;
 	private String author;
@@ -59,5 +60,4 @@ public class StatementSettingsRelationshipId implements Serializable{
 		return "StatementSettingsRelationshipId [statementId=" + statementId + ", version=" + version + ", author="
 				+ author + "]";
 	}
-	
 }

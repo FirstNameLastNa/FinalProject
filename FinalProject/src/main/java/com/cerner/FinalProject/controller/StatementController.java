@@ -32,14 +32,13 @@ public class StatementController {
 	@Autowired
 	private StatementService service;
 	
-	
-	@GetMapping(path= "/statements1")
+	@GetMapping(path= "/statements")
     public ResponseEntity<List<Statement>> getStatement(){       
 		List<Statement> list = service.getStatement();        
        return new ResponseEntity<List<Statement>>(list, HttpStatus.OK);
     }
 	
-	@GetMapping(path= "/statements1/{id}")
+	@GetMapping(path= "/statements/{id}")
     public ResponseEntity<Statement> getStatementById(@PathVariable("id") Long id) throws ResourceNotFoundException{       
         Statement entity = service.getStatementById(id);        
        return new ResponseEntity<Statement>(entity, HttpStatus.OK);
@@ -52,7 +51,7 @@ public class StatementController {
 	 }
 	 
 	 @DeleteMapping(path="/statements/{id}")
-	 public ResponseEntity<Void> deleteStatementById(@PathVariable("id") Long id){
+	 public ResponseEntity<Void> deleteStatementId(@PathVariable("id") Long id){
 		 service.deleteStatementById(id);
 		 return new ResponseEntity<Void>(HttpStatus.ACCEPTED);
 	 }
@@ -61,10 +60,9 @@ public class StatementController {
 	 public ResponseEntity<Statement> updateStatement( @RequestBody Statement statement){
 		 Statement updatedStatement = service.updateStatement(statement);
 	 return new ResponseEntity<Statement>(updatedStatement, HttpStatus.CREATED);
-		 
 	 }	 
 	 
-	 @GetMapping("/statements")
+	 @GetMapping("/statementsByParamValue")
 	 public ResponseEntity<Statement> getPaginationValues(@RequestParam(required = false, name="id") Long id,
 			 @RequestParam(required = true, name="statementDisplay") String statementDisplay,
 			 @RequestParam(required = true, name="offset", defaultValue = "0") @Min(0) Integer offset,
@@ -73,11 +71,9 @@ public class StatementController {
 		 Statement statement = service.findStatementWithPagination(id,statementDisplay, offset, limit, location);
 		 
 		 if(statement!=null) {
-			// return ResponseEntity.ok().build(statement);
 			 return ResponseEntity.status(HttpStatus.OK).body(statement);
 		 }
 		 return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
-		 
 	 }
 	 
 	 @GetMapping(path= "/statements/search/settings/{settingId}")
@@ -93,8 +89,6 @@ public class StatementController {
 		 Statement entity = service.getStatementById(statementId);        
 		 return new ResponseEntity<Statement>(entity, HttpStatus.OK);
    }
-	 
-	 
 }
 
 

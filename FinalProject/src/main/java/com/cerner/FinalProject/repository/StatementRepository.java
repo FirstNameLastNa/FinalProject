@@ -11,10 +11,4 @@ import com.cerner.FinalProject.model.Statement;
 public interface StatementRepository extends JpaRepository<Statement, Long>{
 
 	Page<Statement> findByIdContaining(Long id, PageRequest of);
-	
-
-	
-
-	
-
 }

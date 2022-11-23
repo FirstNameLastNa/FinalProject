@@ -29,6 +29,7 @@ public class Model {
 	List<PrimaryConcept> primaryConcepts;
 	List<ModifierConcept> modifierConcepts;
 	List<AdditionalChecks> additionalChecks;
+	
 	@Id
     @Column(name = "modalId")
     @GeneratedValue
@@ -105,5 +106,4 @@ public class Model {
 	public void setAdditionalChecks(List<AdditionalChecks> additionalChecks) {
 		this.additionalChecks = additionalChecks;
 	}
-
 }

@@ -18,7 +18,6 @@ public class PrimaryConcept {
 	private String conceptAlias;
 	@Column(name="modelId", nullable = false)
 	private boolean modelId ;
-	
 	private Model model;
 	
 	@ManyToOne
@@ -77,5 +76,4 @@ public class PrimaryConcept {
 		return "PrimaryConcept [id=" + id + ", contextId=" + contextId + ", conceptAlias=" + conceptAlias + ", modelId="
 				+ modelId + "]";
 	}
-	
 }

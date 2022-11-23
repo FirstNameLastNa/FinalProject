@@ -9,14 +9,6 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
-
-
 @Entity
 @Table(name="StatementDependencies")
 public class StatementDependencies {
@@ -98,5 +90,4 @@ public class StatementDependencies {
 				+ ", dependencyStatementId=" + dependencyStatementId + ", createdAt=" + createdAt + ", updatedAt="
 				+ updatedAt + "]";
 	}
-
 }
