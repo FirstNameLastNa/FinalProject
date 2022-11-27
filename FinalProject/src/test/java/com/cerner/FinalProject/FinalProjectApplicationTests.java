@@ -7,6 +7,8 @@ import static org.mockito.Mockito.when;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
+
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,13 +50,14 @@ class FinalProjectApplicationTests {
 	
 	@Test
 	public void getStatementByIdTest() {
-		when(repository.findAll()).thenReturn(List.of(new Statement(1, "recordName", new Scope("1","testscope", "testAlieas"), "statementDisplay", "statementText",
+		Statement ss = new Statement(1, "recordName", new Scope("1","testscope", "testAlieas"), "statementDisplay", "statementText",
 				"statementDependencyAlias", "recordOperations", "dateOperations", "requiredOperations",
 				"selector", 5, "withDistinct", false, " tags",
 				"frequencyType", 6, "status", "version", "baseVersion", "author",
 				new Date() , new Date() , new Date() ,new  Date(), null, "firstLink",
-				"nextLink", "prevLink", "lastLink", 10)));
-				assertEquals(1, service.getStatement().size());
+				"nextLink", "prevLink", "lastLink", 10);
+				when(repository.findById(ss.getId())).thenReturn(Optional.of(ss));
+				assertEquals(ss, service.getStatementById(ss.getId()));
 	}
 	
 	@Test
@@ -71,15 +74,14 @@ class FinalProjectApplicationTests {
 	
 	@Test
 	public void deleteStatementTest() {
-				new Statement(1, "recordName", new Scope("1","testscope", "testAlieas"), "statementDisplay", "statementText",
+				Statement s = new Statement(1, "recordName", new Scope("1","testscope", "testAlieas"), "statementDisplay", "statementText",
 				"statementDependencyAlias", "recordOperations", "dateOperations", "requiredOperations",
 				"selector", 5, "withDistinct", false, " tags",
 				"frequencyType", 6, "status", "version", "baseVersion", "author",
 				new Date() , new Date() , new Date() ,new  Date(), null, "firstLink",
 				"nextLink", "prevLink", "lastLink", 10);
-				Long id=null;
-				service.deleteStatementById(id);
-				verify(repository, times(1)).deleteById(id);
+				service.deleteStatementById(s.getId());
+				verify(repository, times(1)).deleteById(s.getId());
 	}	
 }
 
